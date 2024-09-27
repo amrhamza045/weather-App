@@ -3,7 +3,7 @@ import 'package:weather_app/models/icon_handler.dart';
 
 class HourlyForecastModel {
   final String time;
-  final String temperature;
+  final double temperature;
   final String condition;
   final Icon icon;
 
@@ -17,9 +17,8 @@ class HourlyForecastModel {
   factory HourlyForecastModel.fromJson(dynamic json) {
     return HourlyForecastModel(
       time: json['time'] ?? 'N/A',
-      temperature: json['temp_c'] != null
-          ? double.parse(json['temp_c']).round().toString()
-          : 'N/A',
+      temperature:
+          json['temp_c'] != null ? json['temp_c'].round().toDouble() : 0.0,
       condition: json['condition']['text'] ?? 'Unknown',
       icon: iconFinder((json['condition']['text'])),
     );

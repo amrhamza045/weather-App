@@ -5,17 +5,17 @@ class WeatherModel {
   final String cityName;
   final String date;
   final String? imagePath;
-  final String temperature;
-  final String maxTemp;
-  final String minTemp;
-  final String humidity;
-  final String windSpeed;
+  final double temperature;
+  final double maxTemp;
+  final double minTemp;
+  final int humidity;
+  final double windSpeed;
   final String winddirection;
-  final String pressure;
-  final String visibility;
-  final String feelsLike;
+  final int pressure;
+  final int visibility;
+  final double feelsLike;
   final String weatherCondition;
-  final String uvIndex;
+  final int uvIndex;
   final List<HourlyForecastModel> hourlyForecast;
   final List<DayModel> fiveDayForecast;
   WeatherModel({
@@ -50,23 +50,20 @@ class WeatherModel {
       cityName: json['location']['name'],
       date: json['current']['last_updated'],
       weatherCondition: json['current']['condition']['text'],
-      temperature: double.parse(json['current']['temp_c']).round().toString(),
-      maxTemp:
-          double.parse(json['forecast']['forecastday'][0]['day']['maxtemp_c'])
-              .round()
-              .toString(),
-      minTemp:
-          double.parse(json['forecast']['forecastday'][0]['day']['mintemp_c'])
-              .round()
-              .toString(),
-      feelsLike:
-          double.parse(json['current']['feelslike_c']).round().toString(),
-      humidity: int.parse(json['current']['humidity']).toString(),
-      windSpeed: double.parse(json['current']['wind_kph']).toString(),
+      temperature: json['current']['temp_c'].round().toDouble(),
+      maxTemp: json['forecast']['forecastday'][0]['day']['maxtemp_c']
+          .round()
+          .toDouble(),
+      minTemp: json['forecast']['forecastday'][0]['day']['mintemp_c']
+          .round()
+          .toDouble(),
+      feelsLike: json['current']['feelslike_c'].round().toDouble(),
+      humidity: json['current']['humidity'].toInt(),
+      windSpeed: json['current']['wind_kph'].toDouble(),
       winddirection: json['current']['wind_dir'],
-      pressure: int.parse(json['current']['pressure_mb']).toString(),
-      visibility: int.parse(json['current']['vis_km']).toString(),
-      uvIndex: int.parse(json['current']['uv']).toString(),
+      pressure: json['current']['pressure_mb'].toInt(),
+      visibility: json['current']['vis_km'].toInt(),
+      uvIndex: json['current']['uv'].toInt(),
       hourlyForecast: hourlyForecast,
       fiveDayForecast: fiveDayForecast,
     );

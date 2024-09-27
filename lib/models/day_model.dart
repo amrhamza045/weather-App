@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/models/icon_handler.dart';
 
 class DayModel {
-  final String maxTemp;
-  final String minTemp;
+  final double maxTemp;
+  final double minTemp;
   final String condition;
   final Icon icon;
 
@@ -16,10 +16,10 @@ class DayModel {
 
   factory DayModel.fromJson(dynamic json) {
     return DayModel(
-      maxTemp: double.parse(json['day']['maxtemp_c']).round().toString(),
-      minTemp: double.parse(json['day']['mintemp_c']).round().toString(),
-      condition: json['condition']['text'] ?? 'Unknown',
-      icon: iconFinder(json['day']['condition']['icon']),
+      maxTemp: json['day']['maxtemp_c'].round().toDouble(),
+      minTemp: json['day']['mintemp_c'].round().toDouble(),
+      condition: json['day']['condition']['text'] ?? 'Unknown',
+      icon: iconFinder(json['day']['condition']['text']),
     );
   }
 }

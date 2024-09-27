@@ -15,7 +15,7 @@ class WeatherApp extends StatelessWidget {
 
       // change app to dark mode
       theme: ThemeData.dark(),
-      home:const HomeView(),
+      home: const HomeView(),
     );
   }
 }

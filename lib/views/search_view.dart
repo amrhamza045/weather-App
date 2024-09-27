@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/models/search_model.dart';
+import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/services/search_service.dart';
+import 'package:weather_app/services/weather_service.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -15,6 +17,25 @@ class _SearchViewState extends State<SearchView> {
   List<SearchModel> searchList = [];
   bool loaded = false;
   bool isSearching = false;
+
+  Future openDialog(String value) => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: const Text('Add City?'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel')),
+              TextButton(
+                  onPressed: () async {
+                    WeatherModel weatherModel = await WeatherService(Dio())
+                        .getForecast(cityName: value);
+                  },
+                  child: const Text('Confirm'))
+            ],
+          ));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +98,9 @@ class _SearchViewState extends State<SearchView> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    openDialog(searchList[index].cityName);
+                  },
                   title: Text(searchList[index].cityName),
                   subtitle: Text(searchList[index].country),
                 ),
